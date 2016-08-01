@@ -64,7 +64,9 @@ git diff --master 工作区和版本库
 `git log`
 
 ## 回滚
+
 > 可以通过版本号
+
 ```javascript
 git reflog 查看版本
 git reset --hard 版本号  //硬回滚
