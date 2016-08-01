@@ -5,5 +5,6 @@
 
 ```javascript
 git config --user.name  yougithubname
+git config --user.email youemail
 ```
 
