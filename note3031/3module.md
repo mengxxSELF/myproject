@@ -98,6 +98,34 @@ AMD requirejs(依赖前置) [AMD规范](https://github.com/amdjs/amdjs-api/blob/
 
 COMMONJS 使用的是AMD的依赖前置规范
 
+两个类库在模块和factory的书写上其实无太大差异，差异在于模块的加载factory函数的执行。
+
+ CMD 推崇依赖就近，AMD 推崇依赖前置。看代码：
+
+// CMD
+```javascript
+define(function(require, exports, module) {
+   var a = require('./a')
+   a.doSomething()
+   // 此处略去 100 行
+   var b = require('./b') // 依赖可以就近书写
+   b.doSomething()
+   // ...
+})
+```
+
+
+// AMD 默认推荐的是
+```javascript
+define(['./a', './b'], function(a, b) {
+    // 依赖必须一开始就写好
+    a.doSomething()
+    // 此处略去 100 行
+    b.doSomething()
+    // ...
+})
+```
+
 
 
 
