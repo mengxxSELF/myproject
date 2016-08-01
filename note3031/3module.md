@@ -29,11 +29,12 @@
 
 ```
 ** 加载同一个模块不需要重复引入   **
+模块在首次被加载的时候回被缓存起来
 
 ```javascript
 
 require ('./who');
-require ('./who'); 即使你又一次写入了该模块，该模块不会重复加载
+require ('./who'); 即使你又一次写入了该模块，该模块不会重复加载，模块的初始化执行一次
 
 ```
 
@@ -76,7 +77,27 @@ require是个同步方法
 
 按照 module.paths 的顺序，从内到外查找node_modules文件夹中的模块文件
 
-然后查找模块文件夹中的index.js  如果没有查找package.json 里面有个main 参数，他的值是入口文件
+找到该模块包,然后查找该模块包中的index.js(有的是index.json)
+如果没有查找package.json 里面有个main 参数，他的值是入口文件
+
+##介绍一个node的核心模块util
+
+```javascript
+var util =require('util');
+util.inherits(); // 继承父级
+util.inspect(); // 可以显示隐藏属性  console.dir()
+
+```
+
+***
+关于模块依赖
+
+CMD seajs(依赖就近)  [CMD规范](https://github.com/cmdjs/specification/blob/master/draft/module.md)
+
+AMD requirejs(依赖前置) [AMD规范](https://github.com/amdjs/amdjs-api/blob/master/AMD.md)
+
+COMMONJS 使用的是AMD的依赖前置规范
+
 
 
 
