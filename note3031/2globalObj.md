@@ -7,6 +7,9 @@
 
 * console
 * process
+* setTimeout
+* setInterval
+* setImmediate
 
 
 
