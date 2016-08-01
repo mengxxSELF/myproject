@@ -44,7 +44,9 @@ git commit -m'message';  缓存区推送到历史区
 git pull; 远程仓库代码Pull到本地
 git push; 推送到远程仓库
 ```
+> 或者是
 
+`git commit -a -m'message';git pull;git push `
 
 
 
