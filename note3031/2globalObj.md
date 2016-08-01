@@ -15,7 +15,7 @@
 
 > console
 
-*你可以打印console.log(global.console)查看所有属性 下文列出常用的几个  *
+** 你可以打印console.log(global.console)查看所有属性 下文列出常用的几个  **
 
 ```javascript
 console.log
@@ -30,7 +30,7 @@ console.timeEnd
 
 > process
 
-*你可以打印console.log(global.process)查看所有属性 下文列出常用的几个  *
+** 你可以打印console.log(global.process)查看所有属性 下文列出常用的几个  **
 
 ```javascript
 
