@@ -67,12 +67,15 @@ git diff --master 工作区和版本库
 > 可以通过版本号
 ```javascript
 git reflog 查看版本
-
 git reset --hard 版本号  //硬回滚
+
+
 ```
 
 > git远程仓库
+
 ```javascript
+
 注册github账户之后
 git remote add origin https://github.com/zhufengzhufeng/project.git 关联远程仓库
 在本地建立一个 .gitignore文件存放那些不需要传送到github上的文件名称
