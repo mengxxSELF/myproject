@@ -16,8 +16,8 @@ git config --list
 
 
 ```javascript
+pwd 显示当前目录
 cd  更改目录
-git init  初始化仓库
 ls  查看文件 不包括隐藏文件
 ls -a  查看所有文件 ，只显示名称
 ls -al  查看所有文件，显示详细信息  创建时间 大小
@@ -28,6 +28,11 @@ echo textcontent > filename.html 写入内容
 echo textcontent >> filename.html 继续写入内容，不被覆盖
 
 
+```
+
+## 初始化一个git仓库
+```javascript
+git init
 ```
 
 
@@ -47,6 +52,48 @@ git push; 推送到远程仓库
 > 或者是
 
 `git commit -a -m'message';git pull;git push `
+
+##比较不同
+```javascript
+git diff   工作区和缓存区
+git diff --cached  缓存区和版本库
+git diff --master 工作区和版本库
+
+```
+## 查看历史库版本
+`git log`
+
+## 回滚
+> 可以通过版本号
+```javascript
+git reflog 查看版本
+
+git reset --hard 版本号  //硬回滚
+```
+
+> git远程仓库
+```javascript
+注册github账户之后
+git remote add origin https://github.com/zhufengzhufeng/project.git 关联远程仓库
+在本地建立一个 .gitignore文件存放那些不需要传送到github上的文件名称
+比如 .idea node_modules .DS_Store
+git push origin  master -u 第一次推送代码的时候写上这个，以后直接git push即可
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
