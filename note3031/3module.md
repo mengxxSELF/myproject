@@ -63,7 +63,9 @@ require('./try')
 
 ## require
 异步的有回调函数 同步的通过var 返回值获取
+
 require是个同步方法
+
 默认拿到的是{}
 
 
