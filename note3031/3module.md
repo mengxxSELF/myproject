@@ -37,6 +37,7 @@ require ('./who'); 即使你又一次写入了该模块，该模块不会重复�
 
 ```
 
+
 > 如果你想试试重新加载模块，可以第一次的缓存清掉
 
 ```javascript
@@ -67,6 +68,16 @@ require('./try')
 require是个同步方法
 
 默认拿到的是{}
+
+
+
+##引入模块的查找原则
+` reruire('fs') `
+
+按照 module.paths 的顺序，从内到外查找node_modules文件夹中的模块文件
+
+然后查找模块文件夹中的index.js  如果没有查找package.json 里面有个main 参数，他的值是入口文件
+
 
 
 
