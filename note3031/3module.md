@@ -1,5 +1,12 @@
 #module
 
+> module的路径
+` console.log(module.paths)  `
+
+
+
+
+
 ## node中有三类模块
 * 核心模块
 * 文件夹模块
@@ -41,7 +48,7 @@ require.cache()  是读取缓存的
 require.resolve(filename) 读取缓存文件在内存的地址
 
 ```
->  尝试删除一个模块缓存之后重新引入该模块
+##  尝试删除一个模块缓存之后重新引入该模块
 
 ```javascript
 require('./try');
@@ -50,6 +57,16 @@ require('./try')
 
 
 ```
+
+##模块暴露接口
+` module.exports = modulename  `
+
+## require
+异步的有回调函数 同步的通过var 返回值获取
+require是个同步方法
+默认拿到的是{}
+
+
 
 
 
