@@ -119,6 +119,9 @@ define(function(require, exports, module) {
 ```javascript
 define(['./a', './b'], function(a, b) {
     // 依赖必须一开始就写好
+     var a = require('./a');
+     var a = require('./b');
+
     a.doSomething()
     // 此处略去 100 行
     b.doSomething()
