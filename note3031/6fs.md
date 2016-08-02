@@ -42,4 +42,4 @@ fs.writeFile('./2.txt','alone and locing', function (err,data) {
 ```
 
 ###  尝试读取1.txt 中内容放到 2.txt 中
-(fsCopyFile)[]
+(fsCopyFile)[https://github.com/mengxxSELF/myproject/blob/master/note3031/testing/fsCopyFile.js]
