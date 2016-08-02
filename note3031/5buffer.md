@@ -87,6 +87,53 @@ console.log(c)  // <Buffer 02 09 06>
 
 ```
 
+slice创建的子缓存区，在操作完毕后，父级缓存区不会被垃圾收集器回收，所以容易造成
+内存泄漏，你可以使用 copy 方法来解决这个问题
+
+
+
+## 复制缓存区  copy
+
+source.copy(target  ,targetStart ,sourceStart ,sourceEnd  )
+// targetBuffer, 目标buffer
+// targetStart, 目标开开始
+// sourceStart, 源buffer开始 可省略
+// sourceEnd  源buffer结束 可省略
+
+
+```javascript
+
+var buf =new Buffer('i want after the moon')
+
+var buff = new Buffer(5)
+
+buf.copy(buff ,1 , 2,6);
+
+
+
+
+```
+
+## 拼接buffer   concat
+Buffer.concat(list,[totalLength])
+
+参数说明：
+
+ list{Array}：数组类型，Buffer数组，用于被连接
+
+ totalLength：{Number}类型，Buffer数组对象的总大小
+
+ 如果长度小于实际长度，将会截取，否则自动补充
+
+
+```javascript
+
+var buf1 = new Buffer('are you ok')
+var buf2 = new Buffer('   i am fine')
+var bufEmd = Buffer.concat([buf1,buf2],30)
+console.log(bufEmd.toString())
+
+```
 
 
 
