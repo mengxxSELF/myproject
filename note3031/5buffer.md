@@ -188,7 +188,7 @@ console.log(  (Oxfa).toString(2)   ) // 后面是需要转成的进制
 
 
 ### 尝试编写buffer,concat函数，如果给出截取长度，则按其截取，否则直接拼接
-
+[代码如下](https://github.com/mengxxSELF/myproject/blob/master/note3031/testing/concatBuffer.js)
 
 
 
