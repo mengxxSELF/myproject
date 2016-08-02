@@ -28,6 +28,7 @@ npm root -g 查看全局安装目录
 
 
 ###在npm上发布一个自己的包 [npm官网](https://www.npmjs.com/)
+再发布自己的包之前，先搜索查看是否有重名的包
 
 ```javascript
 npm adduser

@@ -26,7 +26,8 @@ touch filename.html 创建文件
 rm filename.html 删除文件
 echo textcontent > filename.html 写入内容
 echo textcontent >> filename.html 继续写入内容，不被覆盖
-
+wq 保存并推出
+q 退出
 
 ```
 
