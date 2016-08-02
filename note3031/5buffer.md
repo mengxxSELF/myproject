@@ -123,7 +123,7 @@ Buffer.concat(list,[totalLength])
 
  totalLength：{Number}类型，Buffer数组对象的总大小
 
- 如果长度小于实际长度，将会截取，否则自动补充
+ 如果长度小于实际长度，将会截取，否则自动补充，补充的是随机值
 
 
 ```javascript
@@ -186,6 +186,27 @@ console.log(  (Oxfa).toString(2)   ) // 后面是需要转成的进制
 
 ```
 
+
+***
+## base64编码解码
+
+1. 把16进制转换成2进制 toString
+2. 把2进制数连起来 每隔6位来一刀 前面补00
+3. 转换成10进制 parseInt
+4. 用对应的值去字符串中取
+
+
+
+
+
+
+
+
+
+
+
+
+***
 
 ### 尝试编写buffer,concat函数，如果给出截取长度，则按其截取，否则直接拼接
 [代码如下](https://github.com/mengxxSELF/myproject/blob/master/note3031/testing/concatBuffer.js)
