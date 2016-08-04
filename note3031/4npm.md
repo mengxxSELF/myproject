@@ -35,8 +35,12 @@ npm adduser
 
 npm publish
 
+npm unpublish --force  强制删除发布的包
+
+
 当你更改之后再次发布的时候，记得更改 package.json中  版本号
 ```
+
 
 
 
