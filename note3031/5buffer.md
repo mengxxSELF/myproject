@@ -197,7 +197,9 @@ console.log(  (Oxfa).toString(2)   ) // 后面是需要转成的进制
 
 
 
+### 发布一个base编码解码包到npm
 
+(base编码解码包)[  https://www.npmjs.com/package/encodeBase64  ]
 
 
 
