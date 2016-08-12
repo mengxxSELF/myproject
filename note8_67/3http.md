@@ -1,6 +1,4 @@
 #http  http模块
-
-
 ping www.baidu.com
 
 ##  发送请求的就是客户端
@@ -58,7 +56,7 @@ Url {
       href: 'http://zhidao.baidu.com/search?lm=0&rn=10&pn=0&fr=search&ie=gbk&word=asdasd'  }
 
 ```
-
+我们一般需要的是 这个路径属性值  pathname
 
 
 
