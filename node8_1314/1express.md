@@ -34,7 +34,7 @@ app.get('/user',function(req,res){
 ```javascript
 app.all('/form',function(req,res){
 
-   req.query; // 获取查询字符串
+   req.query; // 获取查询字符串  就是URL ? 之后的那些
    req.path; // 请求地址 相当于  url.parse(req.url,true).pathname;
    req.hostname; //  请求主机名  req.hostname = req.headers.host.split(':')[0];
 
