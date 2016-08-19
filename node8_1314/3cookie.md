@@ -67,8 +67,19 @@ app.get('/readc',function(req,res){
  //   res.cookie('name','zfpx');
 
 ```
+> 重要属性 httpOnly
 
+如果在COOKIE中设置了httpOnly属性，
+则通过程序(JS脚本)将无法读取到COOKIE信息，防止XSS攻击产生
 
+```javascript
+
+app.get('/login',function(req,res){
+    res.cookie('username',req.query.username,{httpOnly:true});
+    res.redirect('/user');
+});
+
+```
 
 
 
@@ -82,8 +93,6 @@ app.get('/readc',function(req,res){
 
 var cookieParser = require('cookie-parser');
 app.use( cookieParser() );//要先调用一下中间件
-
-
 
 
 ```

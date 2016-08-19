@@ -16,11 +16,15 @@ app.listen(8000);
 ```
 ## 中间件 路由  请求
 ```javascript
-app.use()
+app.use(path ,function(req,res,next){
+   next();
+}); // 中间件不写next  会一直挂起
+app.use(function(req,res,next){
+   next();
+}); // 中间件不写next  会一直挂起
 app.get('/user',function(req,res){
-
    res.send( /* 字符串 数组 对象 数字【数字会返回对应状态码】  */  ); // 代替之前的 res.end(/* 只能是字符串或者buffer */)
-   res.redirect(); // 重定向
+   res.redirect(   ); // 页面重定向
 })
 
 ```
@@ -32,12 +36,15 @@ app.all('/form',function(req,res){
 
    req.query; // 获取查询字符串
    req.path; // 请求地址 相当于  url.parse(req.url,true).pathname;
-   req.host; //  请求主机名
-   req.; //
-
-   req.params.attrName; // 获取请求参数
+   req.hostname; //  请求主机名  req.hostname = req.headers.host.split(':')[0];
 
 })
+
+app.get('/book/:id/:name',function(req,res){
+    req.params.attrName; // 获取请求参数
+    console.log(req.params);
+    res.end(req.params.id+req.params.name);
+});
 
 
 ```
