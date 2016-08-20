@@ -32,14 +32,20 @@ res.end() // 记得关掉电话
 
 
 > url 模块
+
+```
 console.log(url); 看看url 对象有什么属性
 { parse: [Function: urlParse],
   resolve: [Function: urlResolve],
   resolveObject: [Function: urlResolveObject],
   format: [Function: urlFormat],
   Url: [Function: Url] }
+```
+
 
 #  url.parse(request,true)  路径转化为对象
+
+
 ```javascript
 Url {
   protocol: 'http:', 协议
