@@ -20,9 +20,11 @@ http服务器会在发送响应头之后发送响应主体
 
 响应主体数据有两种：字符串和已经存在的buffer
 
+```
 res.write('write in');
 var buffer = new Buffer('hello');
 res.write(buffer);
+```
 
 
 res.statusCode = 200 ; // 404
@@ -98,9 +100,6 @@ var xhr = new
 
 
 
-
-
-
 如果规定响应类型是json格式 xhr = reaponseType('json')
 就要用xhr.response
 
@@ -108,6 +107,7 @@ var xhr = new
 
 
 ## querystring 模块 用来转换格式
+> 查询字符串转化经常用这个
 
 ```
 querystring.parse(obj,&,=);
