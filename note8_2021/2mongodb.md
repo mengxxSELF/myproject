@@ -107,6 +107,22 @@ db.collection_name.find({id:4},{name:1,__id:0}) //但是主键_id 可以混合�
 
 ```
 
+> findOne  查询一条数据
+
+>
+
+```
+db.worker.find({age:{$gt:30}}) 查询age 大于 30的数据
+db.worker.find({age:{$lt:30}}) 查询age <  30的数据
+db.worker.find({age:{$gte:30}}) 查询age 大于等于 30的数据
+db.worker.find({age:{$ne:30}}) 查询age 不等于 30的数据
+
+```
+> db.worker.find().count() 查询结果条数
+
+
+
+
 
 ## 删除
 
