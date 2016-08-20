@@ -73,6 +73,7 @@ Url {
 * application/x-javascript
 
 > mime  使用这个模块就不用自己写 content-type值了 可以自己分析
+
 ```javascript
 var mime = {
     '.html':'text/html',
@@ -106,14 +107,15 @@ var xhr = new
 否则不需要了
 
 
-## querystring 模块
-用来转换格式
+## querystring 模块 用来转换格式
+
+```
 querystring.parse(obj,&,=);
 querystring.stringify(obj,&,=);
 
 var queryObj = querystring.parse(str,[sep],[eq]); //字符串转对象
 var queryStr = querystring.stringify(obj,[sep],[eq]); //对象转字符串
-
+```
 
 
 
