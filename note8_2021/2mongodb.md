@@ -65,8 +65,21 @@ db.course.find()
 ```
 // 使用insert 插入数据  不得重复插入_id 值相同的两条
 db.course.insert({_id:2,name:"xiaoHong",age:10})
+
+
+
 // 使用save插入数据   重复插入_id 值相同的两条   后者会覆盖前者
 db.course.save({_id:3,name:"xiaoHong",age:10})
+
+
+// 你可以封装函数 来增添数据
+
+function add(num){
+    for(var i=0;i<num;i++){
+        db.user.insert({id:i,name:'mxx'+i})
+    }
+}
+
 
 ```
 
@@ -86,7 +99,7 @@ db.course.update({name:'try',{name:'tryagain' },{multi:true}) //
 
 
 ```
-# 查询
+##  查询  find 里面是对象的格式
 
 > 注意 find()   最大可以寻找20条数据
 
@@ -109,7 +122,7 @@ db.collection_name.find({id:4},{name:1,__id:0}) //但是主键_id 可以混合�
 
 > findOne  查询一条数据
 
->
+> 查询条件
 
 ```
 db.worker.find({age:{$gt:30}}) 查询age 大于 30的数据
@@ -119,6 +132,46 @@ db.worker.find({age:{$ne:30}}) 查询age 不等于 30的数据
 
 ```
 > db.worker.find().count() 查询结果条数
+
+> 模糊查询
+
+可以使用正则进行模糊查询
+
+```
+db.worker.find({name:/value/})
+
+```
+##  查询age = 30 或者 age = 50 的数据
+
+```
+ db.worker.find({$or:[{age = 30},{age = 50}]})
+
+```
+
+##  id =5 &&(name='n1'||name='n2')
+
+ db.worker.find({ id=5 ,$or:[{age = 30},{age = 50}]})
+
+## 查询条数限制 可以用来分页
+
+```
+db.worker.find().limit(3) //查询3条
+
+db.worker.find().skip(3) // 跳过3个
+
+//跳过9条取3条
+db.worker.find().skip(9).limit(3) // 跳过3个
+
+
+
+```
+## 查询 并且结果排序
+
+```
+db.worker.find().sort({age:1})
+
+```
+
 
 
 
