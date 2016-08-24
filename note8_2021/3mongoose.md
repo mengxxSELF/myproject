@@ -1,5 +1,8 @@
 # mongoose
 
+
+
+
 ## 设置文档属性
 
 ```
@@ -27,10 +30,65 @@
 
 # 创建数据库
 
-# 定义集合信息 定义Modal  创建实体
+
+# 定义模型骨架 schema
+
+```
+var studentSchema = new mongoose.Schema({
+  // 规定模型应该有的属性以及属性值的类型
+  name: String,
+  age:Number,
+  class:Nmuber
+  birthday:Date
+})
+
+```
+
+可以存在的基本属性类型有:
+
+字符串(String)
+日期型(Date)
+数值型(Number)
+布尔型(Boolean)
+null
+数组([])
+内嵌文档
+
+
+# 定义集合信息 定义Modal
 
 > 在mongo vue 中查看的时候 数据库名字是  定义的模型名的小写然后转复数
 
+```
+     // 实体名称                    // 数据库名字   // 上面创建的骨架
+var studentModel  = mongoose.model('Students',studentSchema);
+
+```
+
+## 创建实体
+
+如果实体中的属性在原来骨架中并不存在，会忽略。如果属性类型与骨架不同，会报错
+
+```
+var studentEntity =  new studentModel({
+  name: 'lh',
+  age:20,
+  class:3
+  birthday:2015.6.7
+
+});
+
+
+```
+> 实体只有一个save方法 向数据库增加该文档
+
+```
+studentEntity.save(function(err,result){
+   if(!err){console.log(result)}
+})
+
+
+```
 
 
 
@@ -52,12 +110,49 @@ personSchema.statics.findByName = function(name,cb){
 }
 
 
+```
+
+
+## model 的基本方法
+
+* create
+* update
+* remove
+* find  findOne findById
+* sort
+* skip
+* limit
+
+
+##  Model.create(文档数据, callback))
+
+向集合中增加文档信息
+
+```
+myModel.create( youObj  ,function(err,res){
+  ...
+})
 
 
 ```
 
 
 
+
+
+
+尝试一个分页查询
+
+```
+
+objModel.find({},{_id:0})
+   .sort({age:-1})
+   .skip(3)
+   .limit(3)
+   .exec(function(err,docs){console.log(docs)})
+
+
+```
 
 
 
