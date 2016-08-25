@@ -147,7 +147,13 @@ app.get('/readc',function(req,res){
 
 
 
+## cookie 有很多缺点
 
+可能被客户端篡改，使用前验证合法性
+不要存储敏感数据，比如用户密码，账户余额
+使用httpOnly保证安全
+尽量减少cookie的体积
+设置正确的domain和path，减少数据传输
 
 
 

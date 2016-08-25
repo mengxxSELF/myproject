@@ -27,8 +27,23 @@
 
 
 # 打开服务器
+后面是数据库本地存放地址
 
-# 创建数据库
+```
+mongod --dbpath=D:\Mongodb\data
+
+```
+
+# 打开客户端
+
+> 已经配置过环境变量，所以可以在任何一个命令行窗口执行
+如果没有，就需要进入D:\Mongodb\data 就是你的本地数据库地址中 执行这个
+
+```
+mongo
+
+
+```
 
 
 # 定义模型骨架 schema
@@ -47,11 +62,17 @@ var studentSchema = new mongoose.Schema({
 可以存在的基本属性类型有:
 
 字符串(String)
+
 日期型(Date)
+
 数值型(Number)
+
 布尔型(Boolean)
+
 null
+
 数组([])
+
 内嵌文档
 
 
@@ -60,7 +81,7 @@ null
 > 在mongo vue 中查看的时候 数据库名字是  定义的模型名的小写然后转复数
 
 ```
-     // 实体名称                    // 数据库名字   // 上面创建的骨架
+     // 实体名称                    // 集合名字   // 上面创建的骨架
 var studentModel  = mongoose.model('Students',studentSchema);
 
 ```

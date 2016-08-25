@@ -1,4 +1,11 @@
-#npm
+#npm  Node的包管理机制
+
+NPM，Node包管理器（Node Package Manager）功能包括：第三方包库、管理计算机中安装的包的机制及定义包依赖关系
+
+NPM有两种工作方式：全局模式和本地模式
+
+> npm 默认的安装环境是本地环境   加上 -g   就代表全局环境
+
 
 ```javascript
 npm init
