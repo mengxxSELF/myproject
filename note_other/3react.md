@@ -101,7 +101,7 @@ ReactDOM.render(
 propTypes指定的属性 当传入的类型不同或者该属性不存在 会报错
 
 
-> this.props.children  子元素
+> this.props.children  子元素 [这个比其他的特殊]
 
 ```
    return (
@@ -115,6 +115,51 @@ propTypes指定的属性 当传入的类型不同或者该属性不存在 会报错
    )
 ```
 
+## 状态
+
+### 定义初始状态
+
+```
+gitInitialState(){
+   return { theKey:theVal }
+}
+```
+
+### 修改状态值 setState
+
+* 修改状态值只能通过这一种方式
+* 状态变化时，会引发组件重绘 重新渲染视图
+
+```
+this.setState({ count: this.state.count+1  })
+```
+setState 是一个异步方法  可以设置回调函数
+
+```
+this.setState({mes:this.state.mes} , function(){
+   this.refs.myInput.value = ''
+})
+```
+
+
+
+## 复合组件
+
+## 组件的声明周期
+
+
+## 混合 mixins 可以实现逻辑的复用
+
+```
+var myMix = {
+
+}
+
+mixins:[myMix]
+
+```
+
+##
 
 
 
@@ -123,15 +168,21 @@ propTypes指定的属性 当传入的类型不同或者该属性不存在 会报错
 
 
 
+## 获取值
 
+* 获取input的值
 
+```
+  var val = this.refs.myInput.value;
+```
+* 获取点击元素的值
 
+```
+handleClick(e){
+  var val =   e.target.value;
+}
 
-
-
-
-
-
+```
 
 
 
