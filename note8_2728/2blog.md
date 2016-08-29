@@ -3,7 +3,7 @@
 ## 1 头部 header
 
 公共部分header 要引入样式文件 放入页面导航
-
+头部有注册登录搜索等按钮
 
 
 
@@ -69,3 +69,43 @@ res.locals.user = req.session.user;
 
 
 ## 3 登录
+
+### 3.1 视图
+
+
+
+### 3.2 路由
+
+要判断用户名是否存在 当存在时继续判断密码是否正确 全部符合时 才可登录
+
+> 记得判断表单传过来的密码和数据库中的密码是否一致
+
+```
+var user = req.body;
+Model('User').findOne({username:user.username}).then(function(doc){
+    if( doc.password == utils.md5(user.password) ){
+        req.flash('success','welcome');
+        req.session.user = doc;
+        res.redirect('/');
+    }else{ /* 处理 当密码不匹配的时候 */
+        req.flash('error','登录失败');
+        res.redirect('back')
+    }
+}).catch(function(){
+     req.flash('登录失败');
+     res.redirect('back')
+})
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
