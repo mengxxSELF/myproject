@@ -9,6 +9,17 @@
 
 ## 2 注册
 
+> 这个使用到用户model，先去创建模型骨架
+
+```
+var UserSchema = new Schema({
+
+})
+var UserModel = mongoose.Model( 'User'  , UserSchema);
+```
+
+
+
 ### 2.1 视图
 
 通过form表单提交用户信息
