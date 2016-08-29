@@ -52,6 +52,37 @@ var UserSchema  = new Schema({
 var UserModel = mongoose.model('mxxUser', UserSchema);
 ```
 
+### 2.4 the important note
+
+在全局对象上定义一个方法属性，当传入一个模型名称，返回此名称对应的模型
+
+```
+global.Model = function(modelName){
+   return mongoose.model(modelName);
+}
+```
+
+由于之后需要向数据库中进行集合的增删改查，需要多次操作model，所以向全局变量暴露
+一个方法，用于获取该Model
+
+例如你要增加一个用户
+
+本来是
+```
+UserModel.create(....)
+```
+当有全局方法之后
+
+```
+Model('UserModel').create()
+```
+
+> 在app.js 中引入此文件
+
+```
+require('./db')
+```
+
 
 ## 3文件分析
 
@@ -66,25 +97,57 @@ var favicon = require('serve-favicon');
 
 ```
 
-> 中间件
+> cookieParser  读取cookie值
 
 ```
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 ```
-后面要app.use
-```
-app.use(bodyParser.json()); 加载解析json的中间件。
-//加载解析urlencoded请求体的中间件。
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser()); 加载解析cookie的中间件。
-```
-
 cookieParser  挂载了 req.cookies   可以读取cookie值
 
+> bodyParser  处理请求体
+
+通过判断请求头中的content-type来得到请求体的内容类型
+```
+var bodyParser = require('body-parser')
+
+//如果是content-type=application/json req.body=JSON.parse(请求体)
+app.use(bodyParser.json());//处理json格式请求体 {name:'zfpx'}
+
+//用来处理urlencoded请求体 name=zfpx&age-6
+//如果content-type=application/x-www-form-urlencoded
+ req.body=querystring.parse(请求体)
+app.use(bodyParser.urlencoded({ extended: false }));
+```
+
 bodyParser 处理请求体  可以是查询字符串形式 也可以是form表单形式
-但是前者是通过 req.query  后者是req.body
+
+* 查询字符串形式是通过 req.query
+* form表单是json格式是通过req.body
+
+>  express-session 和 connect-mongo  会话支持模块
+
+
+```
+// 引入 session
+var session = require('express-session');
+//把session放在数据库mongodb中  本来在服务器的内存里
+var MongoStore = require('connect-mongo')(session);
+
+//当使用了session中间件之后  req.session,在不同的请求之间可以共享
+app.use(session({
+  secret:'mxx',//指定要加密cookie的密钥
+  resave:true,//每次请求都要重新保存session
+  saveUninitialized:true,//保存未初始化的session
+  store:new MongoStore({ //指定session存储位置
+    url:settings.dbUrl //指定了session的存储位置
+  })
+}));
+
+```
+
+
 
 ### 3.2 bin/www 文件
 
@@ -142,7 +205,65 @@ app.use(express.static(path.join(__dirname,'public')))
 
 提过多次，不在赘述
 
-## 4 bower 安装bootstrap jquery插件
+### 3.7 拆分文件 include
+
+创建include文件夹 然后里面header.html footer.html
+前者是头部公共部分 后者是尾部公共部分
+
+然后普通的页面需要引入这个公共部分
+
+例如登录页面
+```
+<%include ../include/header.html  %>
+ 登录页自己的代码
+<%include ../include/footer.html  %>
+
+```
+
+
+
+
+
+## 4 flash 消息提醒
+
+> connect-flash
+
+是一个在 session 中用于存储信息的特定区域 .信息写入 flash ，
+**当读取显示完毕后即被清除**
+
+写flash   req.flash('Name',value)
+读flash   req.flash('Name')
+
+app.js
+
+```
+var flash = require('connect-flash');
+app.use(flash());
+```
+写入flash
+
+```
+req.flash('success','您的操作成功')
+req.flash('error','您的操作失败')
+
+```
+由于每一页都有信息提示，所以把这个放在ree.locals中
+
+app.js 中间件
+```
+app.use(function(req,res,next){
+
+  res.locals.success = req.flash('success').toString();
+  res.locals.error = req.flash('error').toString();
+
+  next();
+})
+
+```
+
+
+
+## 5 bower 安装bootstrap jquery插件
 
 
 ```
@@ -155,10 +276,13 @@ bower install  xxxx
 {'directory':'./public/lib'}
 ```
 
+* * *
 
+## 6 Promise 链式调用
 
+这个是经常使用的
 
-
+> then catch
 
 
 
