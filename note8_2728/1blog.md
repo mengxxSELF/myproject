@@ -220,6 +220,20 @@ app.use(express.static(path.join(__dirname,'public')))
 
 ```
 
+## 3.8 中间件auth  权限设置
+
+有一些路由当只有登录后才可以访问，这样可以设置中间件
+
+```
+exports.mustLogin = function (req,res,next){
+  if(req.session.user){
+     next();
+  }else{
+    req.flash('error','请先登录');
+    res.redirect('/user/reg');
+  }
+}
+```
 
 
 
@@ -260,6 +274,8 @@ app.use(function(req,res,next){
 })
 
 ```
+
+
 
 
 
