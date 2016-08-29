@@ -20,7 +20,7 @@
 
 ### 1.2 路由
 
-> 密码加密
+> MD5密码加密
 
 用户的注册密码是需要通过MD5加密才可以存储到数据库中
 
@@ -37,13 +37,26 @@ exports.md5 = function(str){
 
 ### 1.3 设置一个私人头像
 
-在网站通过邮箱设置一个任何网站都可以访问的头像
-https://en.gravatar.com/emails/
+[在网站通过邮箱设置一个任何网站都可以访问的头像](https://en.gravatar.com/emails/)
 
 
 
 
+> 向数据库添加该用户
 
+```
+var user = req.user;
+
+Model('User').create(user).then(function(doc){
+   req.session.user = doc; // 将集合写到cookie中
+},function(){})
+
+```
+在app.js中添加用户模板字符串的渲染规则
+
+```
+res.locals.user = req.session.user;
+```
 
 
 
