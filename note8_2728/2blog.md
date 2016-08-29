@@ -35,6 +35,13 @@ exports.md5 = function(str){
 
 ```
 
+### 1.3 设置一个私人头像
+
+在网站通过邮箱设置一个任何网站都可以访问的头像
+https://en.gravatar.com/emails/
+
+
+
 
 
 
