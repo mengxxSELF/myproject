@@ -24,7 +24,36 @@ mongod --dbpath=D:\Mongodb\data;
 ```
  require('http').createServer(app).listen(port)
 ```
-### 2  app.js  这是最小重要的文件 是各种配置项所在
+### 2  app.js  这是最重要的文件 是各种配置项所在
+
+下面将几行重要的代码分析一下
+
+>处理收藏夹图标 favicon
+
+```
+var favicon = require('serve-favicon');
+
+```
+
+> 中间件
+
+```
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+
+```
+后面要app.use
+```
+app.use(bodyParser.json()); 加载解析json的中间件。
+//加载解析urlencoded请求体的中间件。
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser()); 加载解析cookie的中间件。
+```
+
+cookieParser  挂载了 req.cookies   可以读取cookie值
+
+bodyParser 处理请求体  可以是查询字符串形式 也可以是form表单形式
+但是前者是通过 req.query  后者是req.body
 
 
 
