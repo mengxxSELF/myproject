@@ -9,7 +9,7 @@
 
 ## 2 配置数据库
 
-### 1 起来一个服务器
+### 2.1 起来一个服务器
 
 命令行输入  等号后面那是本地数据库文件存放地址 这个必须提前建好文件 不然报错
 
@@ -17,9 +17,45 @@
 mongod --dbpath=D:\Mongodb\data;
 ```
 
+### 2.2 创建配置文件 settings
+
+由于这个dbUrl  需要在多个地方使用所以把它单独拿出来
+```
+Module.exports = {
+  dbUrl:"mongodb://localhost/mxx"
+}
+```
+
+### 2.3  mongoose 创建模型
+
+> 建立db 文件夹  index.js
+
+```
+var mongoose = require("mongoose");
+//mongoose.connect("mongodb://localhost:端口号/数据库名称");
+//mongoose.connect("mongodb://localhost/mxx");
+// 但是由于把这部分写到settings 中了，所以应该这么写
+mongoose.connect(settings.dbUrl);
+
+```
+> 创建模型骨架 Schema
+
+```
+var UserSchema  = new Schema({
+
+})
+```
+
+>  Model 拥有了Model，我们也就拥有了操作数据库的能力
+
+```
+var UserModel = mongoose.model('mxxUser', UserSchema);
+```
+
+
 ## 3文件分析
 
-### 1  app.js  这是最重要的文件 是各种配置项所在
+### 3.1  app.js  这是最重要的文件 是各种配置项所在
 
 下面将几行重要的代码分析一下
 
@@ -50,7 +86,7 @@ cookieParser  挂载了 req.cookies   可以读取cookie值
 bodyParser 处理请求体  可以是查询字符串形式 也可以是form表单形式
 但是前者是通过 req.query  后者是req.body
 
-### 2 bin/www 文件
+### 3.2 bin/www 文件
 
 
 简要概括 一行代码
@@ -65,7 +101,7 @@ bodyParser 处理请求体  可以是查询字符串形式 也可以是form表�
 
 
 
-### 3 routes 路由文件
+### 3.3 routes 路由文件
 
 ```
 var express =require('express');
@@ -78,13 +114,13 @@ app.get('/',function(req,res){
 module.exports = router;
 //导出这个路由并在app.js中通过app.use('/', routes); 加载
 ```
-### 4 views 视图文件
+### 3.4 views 视图文件
 
 模板文件中的 ``` <%= title %> ```  这样的模板字符串 会在页面渲染时，被传入的值
 替换 并渲染为HTML形式输出
 
 
-### 5 public 静态文件
+### 3.5 public 静态文件
 
 
 在app.js中设置静态文件存放目录
@@ -102,9 +138,35 @@ app.use(express.static(path.join(__dirname,'public')))
 
 ```
 
-### 6 package.json  依赖信息等
+### 3.6 package.json  依赖信息等
 
 提过多次，不在赘述
+
+## 4 bower 安装bootstrap jquery插件
+
+
+```
+bower install  xxxx
+```
+注意创建一个.bowercc 文件 里面写上通过bower安装的插件应该存放的目录
+不然会自动安装到 bower_modules
+
+```
+{'directory':'./public/lib'}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
