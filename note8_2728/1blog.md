@@ -240,7 +240,8 @@ exports.mustLogin = function (req,res,next){
 
 ## 4 flash 消息提醒
 
-> connect-flash
+
+> [connect-flash](https://github.com/jaredhanson/connect-flash)
 
 是一个在 session 中用于存储信息的特定区域 .信息写入 flash ，
 **当读取显示完毕后即被清除**
