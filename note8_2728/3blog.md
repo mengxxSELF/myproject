@@ -8,12 +8,13 @@
 * 列表展示
     * * 查看所有发布的文章
     * * 查看某一个作者的文章
+    * * 分页
 * 详情
 * 编辑 删除
 * 排序
 * 评论
 * 浏览量
-
+* 关键字搜索
 
 ## 2 添加文章
 
@@ -105,6 +106,21 @@ if(user){query['user']=user}
  Model('Article').find(query) // 添加上查询条件
 
 ```
+### 3.3分页
+
+#### 3.3.1 视图
+
+```
+<%
+  for(var i=1;i<totalPage+1;i++ ){ %>
+     <li class="<%=pageNum==i?'active':''%>"><a href="/article/list?pageNum=<%=i%> ">  <%=i%>  </a></li>
+  <%}
+ %>
+
+```
+
+#### 3.3.2 路由
+
 
 
 
