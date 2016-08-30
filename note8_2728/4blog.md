@@ -41,14 +41,19 @@ comments:[
 
 ### 2.2 路由
 
-注意从form表单中提交过来的字段里面只有  content
-是没有作者的，所以需要user字段
+注意从form表单中提交过来的字段里面只有content
+是没有作者的，所以需要手动添加user字段
 
 
 ```
-    var article = req.body;
-    article.user = req.session.user._id;
-    Model('Article').create(article).then()
+    var articleId =  req.params.id;
+    var comment = req.body;
+    Model('Article').update({_id:articleId},{
+        $push:{comments:[
+           content: comment ,
+           user: req.session.user._id
+        ]}
+    })
 ```
 
 ## 3 文章列表
