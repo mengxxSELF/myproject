@@ -151,21 +151,11 @@ router.get('/delete/:id', function (req,res) {
 
 这里用了一个模态框做的，因为一般删除操作需要二次确认，所以做了模态框
 ```
-            <form action="/article/edit/<%=article._id %>" method="post">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"> title
-                        <input type="text" class="form-control" name="title" value=" <%=article.title%>  "/>
-                    </h4>
-                </div>
-                <div class="modal-body">
-                <textarea class="form-control" name="content"  cols="30" rows="10"><%- article.content %></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
+<form action="/article/edit/<%=article._id %>" method="post">
+    <input type="text" class="form-control" name="title" value=" <%=article.title%>  "/>
+    <textarea class="form-control" name="content"  cols="30" rows="10"><%- article.content %></textarea>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</form>
 
 ```
 
