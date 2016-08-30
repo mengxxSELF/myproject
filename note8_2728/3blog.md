@@ -47,7 +47,9 @@
 
 ## 3 文章列表
 
-### 3.1  路由
+### 3.1  查看当前所有文章
+
+#### 3.1.1路由
 
 查找文章中所有集合
 
@@ -62,7 +64,7 @@ Model('Article')
     })
 ```
 
-### 3.2 视图
+#### 3.1.2 视图
 
 ```
 <%
@@ -79,6 +81,33 @@ Model('Article')
 %>
 
 ```
+### 3.2 查看某一个作者的文章
+
+#### 3.2.1视图
+
+视图文件使用同一个list文件，实现模板的复用
+
+传入一个用户id 通过查询字符串的形式
+```
+<a href="/article/list?user=<%=article.user._id%>"><a>
+
+```
+
+#### 3.2.1路由
+
+增加一个查询条件
+```
+var user = req.query.user;
+var query = {};
+
+if(user){query['user']=user}
+
+ Model('Article').find(query) // 添加上查询条件
+
+```
+
+
+
 
 ## 4 文章详情
 
@@ -96,7 +125,72 @@ router.get('/detail/:id', function (req,res) {
 })
 
 ```
-## 5
+## 5 删除
+
+### 5.1 视图
+
+```
+<a class="btn btn-default" href="/article/delete/<%=article._id%>" >delete</a>
+
+```
+
+### 5.2 路由
+
+```
+router.get('/delete/:id', function (req,res) {
+    var articleId = req.params.id;
+    Model('Article').remove({_id:articleId}).then(function () {
+      res.redirect('/article/list')
+    })
+})
+```
+
+## 6 编辑
+
+## 6.1 视图
+
+这里用了一个模态框做的，因为一般删除操作需要二次确认，所以做了模态框
+```
+            <form action="/article/edit/<%=article._id %>" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"> title
+                        <input type="text" class="form-control" name="title" value=" <%=article.title%>  "/>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                <textarea class="form-control" name="content"  cols="30" rows="10"><%- article.content %></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+
+```
+
+
+## 6.2 路由
+
+自然是post 请求了
+
+> update $set
+
+```
+ var articleId = req.params.id;
+    var article = req.body;
+    Model('Article')
+       .findById({_id:articleId})
+       .update({$set:{title:article.title,content:article.content}})
+
+```
+
+后来证实这样直接修改也是对的
+
+```
+ var article = req.body;
+    Model('Article').findById({_id:articleId}).update(article)
+```
 
 
 
