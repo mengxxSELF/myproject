@@ -185,7 +185,7 @@ router.get('/delete/:id', function (req,res) {
 
 ```
 
-后来证实这样直接修改也是对的
+后来证实这样直接修改也是对的,相当于提交内容字段 的值被修改
 
 ```
  var article = req.body;
