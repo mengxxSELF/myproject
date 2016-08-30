@@ -11,12 +11,46 @@
     * * 分页查询
 * 详情
 * 编辑 删除
-* 评论
 * 浏览量
+* 评论
+* 关键字搜索
 * 排序
 
 
-## 7 评论
+## 7  PV  浏览量  Pageviews
+
+> 在模型骨架中增加该字段
+
+```
+    pv:{type:Number,default:0} , /* 文章浏览量 */
+
+```
+
+### 7.1 视图
+
+```
+<b>page views</b> <%=article.pv%>
+```
+### 7.2 路由
+
+访问一次该路由，PV值加一
+
+```
+Model('Article').update({_id:articleId},{ $inc :{ pv:1 }}).then(function () {
+        return Model('Article').findById({_id:articleId}).populate('comments.user')
+    }).then(function (doc) {
+        res.render('article/detail',{title:'文章详情' ,article:doc})
+    })
+
+```
+
+> 这种写法为什么不对
+```
+ Model('Article').update({_id:articleId},{ $inc :{ pv:1 }}).populate('comments.user').exec().then(function (doc) {
+        res.render('article/detail',{title:'文章详情' ,article:doc})
+    })
+```
+## 8 评论文章
 
 > 先去article 的模型骨架增加评论字段
 
@@ -29,8 +63,9 @@ comments:[
 
 ```
 
-### 7.1 视图
+### 8.1  评论  [有问题 需处理]
 
+#### 8.1.1视图
 通过form表单提交评论信息
 
 ```
@@ -39,11 +74,10 @@ comments:[
 </form>
 ```
 
-### 2.2 路由
+#### 8.1.2  路由
 
 注意从form表单中提交过来的字段里面只有content
 是没有作者的，所以需要手动添加user字段
-
 
 ```
     var articleId =  req.params.id;
@@ -56,142 +90,57 @@ comments:[
     })
 ```
 
-## 3 文章列表
 
-### 3.1  查看当前所有文章
+### 8.2 删除文章评论
 
-#### 3.1.1路由
+#### 8.2.1视图
 
-查找文章中所有集合
+#### 8.2.1路由
 
-```
-Model('Article')
-    .find({})
-    .sort({createAt:-1})
-    .populate('user')  // 这个是把user转为对象 不然是字符串形式
-    .exec()
-    .then(function(docs){
-         res.render('article/list',{ articles: docs })
-    })
-```
+> 要考虑有没有删除权限
 
-#### 3.1.2 视图
+没写出来呢
+
+
+
+## 9 关键字搜索
+
+### 9.1 视图
+
+在头部添加form表单
 
 ```
-<%
-   articles.forEach(function(article){ %>
-       <%= article.title %>
-       <%= article.content %>
-
-       <%= article.createAt.tolocaleString() %>
-
-// 一下这两个是从外键user中获取的
-       <%= article.user.avatar %>
-       <%= article.user.username %>
-   <% })
-%>
-
-```
-### 3.2 查看某一个作者的文章
-
-#### 3.2.1视图
-
-视图文件使用同一个list文件，实现模板的复用
-
-传入一个用户id 通过查询字符串的形式
-```
-<a href="/article/list?user=<%=article.user._id%>"><a>
-
+ <form action='/article/list?' class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input name="keyword" type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
 ```
 
-#### 3.2.1路由
 
-增加一个查询条件
+### 9.2 路由
+
+
+
+> 主要是通过正则 来查找数据库
+
+注意这里的关键字keyword是通过req.query.keyword获得的
+因为表单是get提交方式，所以是查询字符串格式不是JSON请求体
+
+
+> find({user:username , $or:[age:20,num:3]})   或的查询方式
+
 ```
-var user = req.query.user;
-var query = {};
-
-if(user){query['user']=user}
-
- Model('Article').find(query) // 添加上查询条件
-
+if(keyword){
+        var filter = new RegExp(keyword);
+        query['$or']=[{content:filter},{title:filter}]
+    }
 ```
 
 
 
 
-## 4 文章详情
-
-### 4.1 视图
-### 4.2 路由
-
-> 主要是通过文章_id 来查找数据库
-
-```
-router.get('/detail/:id', function (req,res) {
-    var articleId = req.params.id;
-    Model('Article').findById({_id:articleId}).then(function (doc) {
-        res.render('article/detail',{title:'文章详情' ,article:doc})
-    })
-})
-
-```
-## 5 删除
-
-### 5.1 视图
-
-```
-<a class="btn btn-default" href="/article/delete/<%=article._id%>" >delete</a>
-
-```
-
-### 5.2 路由
-
-```
-router.get('/delete/:id', function (req,res) {
-    var articleId = req.params.id;
-    Model('Article').remove({_id:articleId}).then(function () {
-      res.redirect('/article/list')
-    })
-})
-```
-
-## 6 编辑
-
-## 6.1 视图
-
-这里用了一个模态框做的，因为一般删除操作需要二次确认，所以做了模态框
-```
-<form action="/article/edit/<%=article._id %>" method="post">
-    <input type="text" class="form-control" name="title" value=" <%=article.title%>  "/>
-    <textarea class="form-control" name="content"  cols="30" rows="10"><%- article.content %></textarea>
-    <button type="submit" class="btn btn-primary">Save changes</button>
-</form>
-
-```
-
-
-## 6.2 路由
-
-自然是post 请求了
-
-> update $set
-
-```
- var articleId = req.params.id;
-    var article = req.body;
-    Model('Article')
-       .findById({_id:articleId})
-       .update({$set:{title:article.title,content:article.content}})
-
-```
-
-后来证实这样直接修改也是对的,相当于提交内容字段 的值被修改
-
-```
- var article = req.body;
-    Model('Article').findById({_id:articleId}).update(article)
-```
 
 
 
