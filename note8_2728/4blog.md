@@ -46,7 +46,7 @@ Model('Article').update({_id:articleId},{ $inc :{ pv:1 }}).then(function () {
 
 > 这种写法为什么不对
 ```
- Model('Article').update({_id:articleId},{ $inc :{ pv:1 }}).populate('comments.user').exec().then(function (doc) {
+ Model('Article').update({_id:articleId},{ $inc:{ pv:1 }}).populate('comments.user').exec().then(function (doc) {
         res.render('article/detail',{title:'文章详情' ,article:doc})
     })
 ```
