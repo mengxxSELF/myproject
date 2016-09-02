@@ -138,7 +138,45 @@ if(keyword){
     }
 ```
 
+## 10按条件排序
 
+
+>  时间createAt  访问量pv
+
+### 10.1 视图
+
+```
+<select onchange='goto<%=nowPageNum%>'>
+  <option value='createAt' class=' <% order=='createAt' ? 'selected' :''    %>  '> 时间正序 </option>
+  <option value='-createAt' class=' <% order=='createAt' ? 'selected' :''    %>  '> 时间倒序 </option>
+</select>
+
+```
+当点击时候，需要传入当前排序选择值
+
+### 10.2 路由
+
+设置sort 排序对象即可
+
+
+```
+var order = req.order;
+var defaultOrder = {createAt:-1}
+
+if(order){
+
+if(order.startsWith('-')){   // 如果以-开头  -createAt
+    var orderBy = order.slice(1); // 取出排序字段 createAt
+    defaultOrder = { orderBy : -1}
+}else{
+    defaultOrder = {order:1}
+}
+
+}
+
+  .order(defaultOrder)
+
+```
 
 
 
