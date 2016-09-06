@@ -184,8 +184,8 @@ child.stdout.on('exit',function(){
   用于处理错误或进入下一方法。当发生错误时（即：err参数存在时），
   其后的方法会跳过，错误被传入最终回调方法中。
 * 回调函数
-  可选的最终回调方法。出错时，tasks中抛出的错误将在此方法中捕获，
-  错误被传入err参数。
+  可选的最终回调方法。
+  出错时，tasks中抛出的错误将在此方法中捕获，错误被传入err参数。
   不出错时，tasks中回调结果将被写入results参数中，以数据或对象形式提供。
 
 
@@ -204,6 +204,8 @@ async.series([
          })
       }
 ],function(err.result){
+ // 当tasks中的任一方法发生错误，即回调形式为callback('错误信息')时，
+ 错误将被传递给err参数，未发生错误err参数为空
    console.log(err)
    console.log(result)
 })
@@ -212,6 +214,111 @@ async.series([
 ```
 将结果传递给callback 这样最后当数组中的函数执行完毕，回调函数会
 打印出所有的result，起值的顺序是 按照数组中函数的排列顺序
+
+
+### 6.2 并行执行
+所有函数同时执行，方法之间没有数据传递
+但是最终回调函数中results的数组数据是按照tasks中函数的声明顺序，
+不是执行顺序
+
+所以函数最终执行完毕所需时间，是按照需要时间最久的那个以函数，而不是
+各个函数的累加
+
+> async.parallel([tasks],callback)
+
+
+
+### 6.3 waterfall
+waterfall方法与series方法类似用于依次执行多个方法，一个方法执行完毕后才会进入下一方法，
+不同与series方法的是，waterfall之间有数据传递
+
+> async.waterfall([tasks],callback)
+
+
+```
+async.waterfall([
+    function (callback) {
+        callback(null,'water')
+    },
+    function (data,callback) {
+        callback(null,data+ '  coffee')
+    }
+], function (err,res) {
+    console.log(res)
+})
+
+```
+
+上一个函数的结果，将传递给下一个函数作为参数
+
+
+### 6.4 auto
+
+auto方法根据传入的任务类型选择最佳的执行方式。不依赖于其它任务的方法将并发执行，
+依赖于其它任务的方法将在其执行完成后执行。
+
+
+> async.auto([tasks],callback)
+
+
+
+```
+async.auto({
+    water: function (callback) {
+        setTimeout(callback,1000,null,'water')
+        // 此任务和 flour并行执行
+    },
+    flour: function (callback) {
+        setTimeout(callback,1000,null,'面')
+         // 此任务和 water 并行执行
+    },
+    mix:['water','flour', function (result,callback) {
+      // 此方法等待 'water','flour' 执行后执行
+        console.log( result)
+        setTimeout(callback,2000,null,result.water+'和面')
+    }],
+    steam:['mix', function (result,callback) {
+     // 此方法等待 'Mix' 执行后执行
+        setTimeout(callback,3000,null,'正面头')
+    }]
+}, function (err,result) {
+    console.log(err)
+    console.log(result)
+})
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
