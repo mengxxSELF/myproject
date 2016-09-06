@@ -129,12 +129,14 @@ var child2 = child_process.exec('node sum.js')
 
 ```
 
+* spawn 只要子进程有了标准输出，会马上以流的方式传递给主进程
+* exec 子进程有了标准输出 不会立刻传递给主进程，而会收集起来，等待子进程完全
+结束终止后才会把所有的标准输出传给回调函数
 
 
 
 
-
-##监听子进程的标准输出
+## stdout 监听子进程的标准输出
 
 * * 如果子进程有输出就会触发data事件
 * * 如果子进程的标准输出结束了，会触发end事件
@@ -157,17 +159,59 @@ child.stdout.on('exit',function(){
 
 ```
 
-(child_process)[http://itbilu.com/nodejs/core/E1kBYnPH.html]
+[child_process](http://itbilu.com/nodejs/core/E1kBYnPH.html)
+
+
+
+[使用此模块，实现node的下载功能](http://blog.csdn.net/huntzw/article/details/7876760)
 
 
 
 
+## 6 async
+
+### 6.1 串行执行
+
+多个任务依次执行，一个方法执行完毕后才会进入下一方法，方法之间没有数据传递。
+
+> async.series([tasks],callback)
+
+参数：
+
+* 函数数组
+  需要执行多个方法。tasks可以以数组形式传入，也可以以object对象形式传入。
+  每个方法都要一个回调方法callback(err, result)，
+  用于处理错误或进入下一方法。当发生错误时（即：err参数存在时），
+  其后的方法会跳过，错误被传入最终回调方法中。
+* 回调函数
+  可选的最终回调方法。出错时，tasks中抛出的错误将在此方法中捕获，
+  错误被传入err参数。
+  不出错时，tasks中回调结果将被写入results参数中，以数据或对象形式提供。
 
 
 
+这里用抓取页面的请求头为例子
+```
+async.series([
+   function(callback){
+      request('www.baiud.com',function (err,req,body){
+         callback(null,req.headers)
+      })
+   },
+   function(callback){
+         request('www.wetvff.com',function (err,req,body){
+            callback(null,req.headers)
+         })
+      }
+],function(err.result){
+   console.log(err)
+   console.log(result)
+})
 
 
-
+```
+将结果传递给callback 这样最后当数组中的函数执行完毕，回调函数会
+打印出所有的result，起值的顺序是 按照数组中函数的排列顺序
 
 
 
