@@ -1,36 +1,36 @@
 # session
 
-½«Êı¾İ´æ´¢ÔÚ·şÎñÆ÷¶Ë¡£ºÍcookie²»Í¬¡£±ÈcookieÒª°²È«
+å°†æ•°æ®å­˜å‚¨åœ¨æœåŠ¡å™¨ç«¯ã€‚å’Œcookieä¸åŒã€‚æ¯”cookieè¦å®‰å…¨
 
-## session ´æ´¢µÄ»ù±¾Ô­Àí
+## session å­˜å‚¨çš„åŸºæœ¬åŸç†
 
-> ÔÚ·şÎñÆ÷¶ËÊ¹ÓÃÎ¨Ò»±êÊ¶´æ´¢Êı¾İ£¬Ò»¸ö±êÊ¶¶ÔÓ¦Ò»¸öÖµ£¬½«´Ë±êÊ¶Öµ·¢ËÍ¸ø¿Í»§¶Ë
-µ±¿Í»§¶ËĞ¯´ø´Ë±êÊ¶ÖµÀ´·ÃÎÊ·şÎñÆ÷µÄÊ±ºò£¬¾Í·µ»Ø¸ø¿Í»§¶Ë¸Ã±êÊ¶¶ÔÓ¦µÄÊı¾İÖµ
+> åœ¨æœåŠ¡å™¨ç«¯ä½¿ç”¨å”¯ä¸€æ ‡è¯†å­˜å‚¨æ•°æ®ï¼Œä¸€ä¸ªæ ‡è¯†å¯¹åº”ä¸€ä¸ªå€¼ï¼Œå°†æ­¤æ ‡è¯†å€¼å‘é€ç»™å®¢æˆ·ç«¯
+å½“å®¢æˆ·ç«¯æºå¸¦æ­¤æ ‡è¯†å€¼æ¥è®¿é—®æœåŠ¡å™¨çš„æ—¶å€™ï¼Œå°±è¿”å›ç»™å®¢æˆ·ç«¯è¯¥æ ‡è¯†å¯¹åº”çš„æ•°æ®å€¼
 
 
 ```
 var express = require('express');
 var cookieParser = require('cookie-parser');
-var uuid = require('uuid'); // ÓÃÀ´Éú³É²»Í¬µÄcookieID Öµ ×÷Îª·şÎñÆ÷ÖĞ´æ´¢µÄÎ¨Ò»±êÊ¶·û
+var uuid = require('uuid'); // ç”¨æ¥ç”Ÿæˆä¸åŒçš„cookieID å€¼ ä½œä¸ºæœåŠ¡å™¨ä¸­å­˜å‚¨çš„å”¯ä¸€æ ‡è¯†ç¬¦
 var app =express();
 
 
 var sessions ={};
 var SESSION_KEY='session_id';
 app.get('/',function(req,res){
-  var getCookieId = req.cookies[SESSION_KEY]; // ÅĞ¶Ï¿Í»§¶ËÊÇ·ñÓĞ±êÊ¶
+  var getCookieId = req.cookies[SESSION_KEY]; // åˆ¤æ–­å®¢æˆ·ç«¯æ˜¯å¦æœ‰æ ‡è¯†
   if(getCookieId){
-      var getCookieCont = sessions[getCookieId]; // Í¨¹ıÕâ¸öÎ¨Ò»±êÊ¶Öµ ÔÚsessions ÖĞ²éÕÒ¶ÔÓ¦µÄÊı¾İ
+      var getCookieCont = sessions[getCookieId]; // é€šè¿‡è¿™ä¸ªå”¯ä¸€æ ‡è¯†å€¼ åœ¨sessions ä¸­æŸ¥æ‰¾å¯¹åº”çš„æ•°æ®
       if(getCookieCont){
-         getCookieCont.moneyTotal -= 10; // Èç¹ûÓĞÖµ ½«Öµ¼õÈ¥10Ôª
+         getCookieCont.moneyTotal -= 10; // å¦‚æœæœ‰å€¼ å°†å€¼å‡å»10å…ƒ
       }
-      res.send('ÄãÓĞ¶àÇ®'+ getCookieCont.moneyTotal )
+      res.send('ä½ æœ‰å¤šé’±'+ getCookieCont.moneyTotal )
   }else{
-      // Èç¹û·¢ÏÖÇëÇóÍ·ÖĞ   Ã»ÓĞSESSION_KE  ¾Í´´½¨²¢¸³Öµ
-      var sessionId = uuid.v4(); // Éú³ÉÎ¨Ò»±êÊ¶
-      sessions[sessionId]=  { moneyTotal : 100   }  ; //ÔÚsessions ÖĞ±£´æÊıÖµ
-      res.cookie(SESSION_KEY,sessionId); // ½«±êÊ¶Ãû Ğ´Èëcookie
-      res.send('ÄãÓĞ¶àÇ®'+ sessions[sessionId].moneyTotal)
+      // å¦‚æœå‘ç°è¯·æ±‚å¤´ä¸­   æ²¡æœ‰SESSION_KE  å°±åˆ›å»ºå¹¶èµ‹å€¼
+      var sessionId = uuid.v4(); // ç”Ÿæˆå”¯ä¸€æ ‡è¯†
+      sessions[sessionId]=  { moneyTotal : 100   }  ; //åœ¨sessions ä¸­ä¿å­˜æ•°å€¼
+      res.cookie(SESSION_KEY,sessionId); // å°†æ ‡è¯†å å†™å…¥cookie
+      res.send('ä½ æœ‰å¤šé’±'+ sessions[sessionId].moneyTotal)
   }
 
 
@@ -42,8 +42,26 @@ app.listen(5005);
 
 ```
 
-Ê¹ÓÃÒÔÉÏ·½·¨£¬µ±·şÎñÆ÷¶ËÖØÆô£¬Êı¾İÏûÊ§£¬¿Í»§¶ËcookieÖµ´æÔÚ£¬ËùÒÔ»á³ö´í
+ä½¿ç”¨ä»¥ä¸Šæ–¹æ³•ï¼Œå½“æœåŠ¡å™¨ç«¯é‡å¯ï¼Œæ•°æ®æ¶ˆå¤±ï¼Œå®¢æˆ·ç«¯cookieå€¼å­˜åœ¨ï¼Œæ‰€ä»¥ä¼šå‡ºé”™
 
+## åˆ›å»ºæœ¬åœ°æ•°æ®æ–‡ä»¶ session.json
 
+```
+function setSession(sessions){ // å°†sessionå†™å…¥æ–‡ä»¶
+        fs.writeFileSync('./session.json',JSON.stringify(sessions))
+    }
+    function getSession(){ // å°†sessionä»æ–‡ä»¶ä¸­è¯»å‡ºæ¥
+        var sessions ={};
+        var exists = fs.existsSync('./session.json');
+        if(exists){ // åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+            var cont = fs.readFileSync('./session.json');
+            if(cont){ // å¦‚æœåœ¨æ–‡ä»¶ä¸­è¯»åˆ°å†…å®¹ å°±è½¬æˆå¯¹è±¡
+                sessions = JSON.parse(cont);
+            };
+        }
+        return sessions;
+    }
+```
 
+è¯»å–sessionçš„æ—¶å€™ä»æœ¬åœ°æ–‡ä»¶ä¸­æ‹¿ï¼Œè¿™æ ·å½“æœåŠ¡ç«¯é‡å¯ä¹Ÿä¸ä¼šå½±å“æ•°æ®
 
