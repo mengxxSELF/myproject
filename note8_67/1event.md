@@ -1,4 +1,4 @@
-# eveent
+# event
 
 on emit
 
