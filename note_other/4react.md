@@ -11,6 +11,67 @@ bower安装插件，可以设置安装目录，通过创建.bowerrc
 {"directory":"./public/lib"}
 
 ```
+## 生命周期
+
+> 挂载
+* componentWillMount 服务器端和客户端都只调用一次 初始化渲染之前立即调用
+
+* componentDidMount 在初始化渲染执行之后立刻调用一次，仅客户端有效（服务器端不会调用）。
+在生命周期中的这个时间点，组件拥有一个DOM 展现，你可以通过 this.getDOMNode() 来获取相应 DOM 节点。
+
+> 更新
+
+* componentWillReceiveProps
+在组件接收到新的props 的时候调用。在初始化渲染的时候，该方法不会调用。
+
+用此函数可以作为react 在 prop 传入之后，
+ render() 渲染之前更新 state 的机会。
+老的 props 可以通过 this.props 获取到。在该函数中调用 this.setState() 将不会引起第二次渲染。
+
+* shouldComponentUpdate
+
+在接收到新的props 或者 state，将要渲染之前调用。
+该方法在初始化渲染的时候不会调用，
+在使用 forceUpdate 方法的时候也不会。
+如果确定新的props 和 state 不会导致组件更新，
+则此处应该 返回 false。
+
+* componentWillUpdate
+
+ 在接收到新的props 或者 state 之前立刻调用。在初始化渲染的时候该方法不会被调用。
+ 使用该方法做一些更新之前的准备工作。
+
+* componentDidUpdate
+  在组件的更新已经同步到DOM 中之后立刻被调用。
+  该方法不会在初始化渲染的时候调用。
+
+  使用该方法可以在组件更新之后操作DOM 元素。
+
+  注意：
+  为了兼容 v0.9，DOM节点会作为最后一个参数传入。
+  如果使用这个方法，你仍然可以使用 this.getDOMNode() 来访问 DOM 节点。
+
+> 移除
+
+* componentWillUnmount()
+在组件从DOM 中移除的时候立刻被调用。
+
+在该方法中执行任何必要的清理，比如无效的定时器，或者清除在 componentDidMount 中创建的 DOM 元素。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 在页面引入js文件
 
 ```
@@ -183,6 +244,17 @@ handleClick(e){
 }
 
 ```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
