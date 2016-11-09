@@ -96,6 +96,17 @@ res.setHeader('Access-Control-Allow-Origin', '*')
   最后，当响应完成，send() 或后台线程把 readyState 设置为 4，
   并最后一次触发事件监听。
 
+***
+
+## get请求和post请求的区别
+
+* 发送数据的区别
+get发送数据是通过url，参数可以被读到 post不会
+
+
+* get请求和post请求在服务器端的区别:
+在客户端使用get请求时,服务器端使用Request.QueryString来获取参数,
+而客户端使用post请求时,服务器端使用Request.Form来获取参数.
 
 
 
